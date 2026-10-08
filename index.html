@@ -25,23 +25,25 @@ html, body {
 
 <body>
 
-<img id="photo" src="fotos/16%20copy.jpg" alt="">
+<img id="photo" alt="">
 
 <script>
-
 const photos = [
-    "fotos/16%20copy.jpg",
-    "fotos/18%20copy.jpg",
-    "fotos/3%20copy.jpg",
-    "fotos/5%20copy.jpg",
-    "fotos/8%20copy.jpg",
-    "fotos/9%20copy.jpg"
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/16%20copy.jpg",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/53CE97CF-D94D-4427-B855-684A1A6D1C0C.jpg",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_1287.jpeg",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_4656.JPG",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_6834.JPG",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_6838.JPG",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_8247.jpeg",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_8252.jpeg",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_8256.jpeg",
+    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_9059.JPG"
 ];
 
 let current = -1;
 
 function showPhoto() {
-
     let next;
 
     do {
@@ -49,14 +51,11 @@ function showPhoto() {
     } while (photos.length > 1 && next === current);
 
     current = next;
-
     document.getElementById("photo").src = photos[current];
 }
 
 showPhoto();
-
 setInterval(showPhoto, 2000);
-
 </script>
 
 </body>
