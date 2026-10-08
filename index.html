@@ -2,31 +2,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 html, body {
   margin: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
   background: white;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-img {
-  width: 100vw;
-  height: 100vh;
+#photo {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
-  display: block;
+  cursor: pointer;
   transition: opacity 1s ease;
-  opacity: 1;
 }
 </style>
 </head>
 
 <body>
 
-<img id="photo">
+<img id="photo" src="16%20copy.jpg">
 
 <script>
 const photos = [
@@ -38,32 +45,21 @@ const photos = [
   "9%20copy.jpg"
 ];
 
-let current = -1;
-const photo = document.getElementById("photo");
+let current = 0;
 
-function nextPhoto() {
-
-  let next;
-
-  do {
-    next = Math.floor(Math.random() * photos.length);
-  } while (photos.length > 1 && next === current);
-
-  current = next;
-
-  photo.style.opacity = 0;
+function changePhoto() {
+  document.getElementById("photo").style.opacity = "0";
 
   setTimeout(function() {
-    photo.src = photos[current];
-    photo.style.opacity = 1;
+    current = (current + 1) % photos.length;
+    document.getElementById("photo").src = photos[current];
+    document.getElementById("photo").style.opacity = "1";
   }, 1000);
 }
 
-nextPhoto();
+setInterval(changePhoto, 5000);
 
-setInterval(nextPhoto, 5000);
-
-photo.onclick = nextPhoto;
+document.getElementById("photo").onclick = changePhoto;
 </script>
 
 </body>
