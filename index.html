@@ -28,34 +28,59 @@ html, body {
 <img id="photo" alt="">
 
 <script>
-const photos = [
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/16%20copy.jpg",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/53CE97CF-D94D-4427-B855-684A1A6D1C0C.jpg",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_1287.jpeg",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_4656.JPG",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_6834.JPG",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_6838.JPG",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_8247.jpeg",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_8252.jpeg",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_8256.jpeg",
-    "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/IMG_9059.JPG"
-];
 
+const photo = document.getElementById("photo");
+
+const apiURL =
+    "https://api.github.com/repos/aplanetice/fotos/contents/fotos";
+
+let photos = [];
 let current = -1;
 
-function showPhoto() {
+async function loadPhotos() {
+
+    const response = await fetch(apiURL);
+
+    if (!response.ok) {
+        throw new Error("No se pudieron cargar las fotos");
+    }
+
+    const files = await response.json();
+
+    photos = files
+        .filter(file =>
+            file.type === "file" &&
+            /\.(jpg|jpeg|png|webp|gif)$/i.test(file.name)
+        )
+        .map(file =>
+            "https://raw.githubusercontent.com/aplanetice/fotos/main/fotos/" +
+            encodeURIComponent(file.name)
+        );
+
+    if (photos.length > 0) {
+        showRandomPhoto();
+        setInterval(showRandomPhoto, 2000);
+    }
+}
+
+function showRandomPhoto() {
+
     let next;
 
     do {
         next = Math.floor(Math.random() * photos.length);
-    } while (photos.length > 1 && next === current);
+    } while (
+        photos.length > 1 &&
+        next === current
+    );
 
     current = next;
-    document.getElementById("photo").src = photos[current];
+
+    photo.src = photos[current];
 }
 
-showPhoto();
-setInterval(showPhoto, 2000);
+loadPhotos();
+
 </script>
 
 </body>
