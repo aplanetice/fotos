@@ -25,23 +25,23 @@ html, body {
 
 <body>
 
-<img id="photo" alt="">
+<img id="photo" src="fotos/16%20copy.jpg" alt="">
 
 <script>
-let photos = [];
+
+const photos = [
+    "fotos/16%20copy.jpg",
+    "fotos/18%20copy.jpg",
+    "fotos/3%20copy.jpg",
+    "fotos/5%20copy.jpg",
+    "fotos/8%20copy.jpg",
+    "fotos/9%20copy.jpg"
+];
+
 let current = -1;
 
-async function loadPhotos() {
-    const response = await fetch("photos.json");
-    photos = await response.json();
+function showPhoto() {
 
-    if (photos.length > 0) {
-        showRandomPhoto();
-        setInterval(showRandomPhoto, 2000);
-    }
-}
-
-function showRandomPhoto() {
     let next;
 
     do {
@@ -49,10 +49,14 @@ function showRandomPhoto() {
     } while (photos.length > 1 && next === current);
 
     current = next;
+
     document.getElementById("photo").src = photos[current];
 }
 
-loadPhotos();
+showPhoto();
+
+setInterval(showPhoto, 2000);
+
 </script>
 
 </body>
